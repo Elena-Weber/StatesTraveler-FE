@@ -1,0 +1,41 @@
+body {
+background-color: blanchedalmond;
+}
+
+#navi {
+background-color: burlywood;
+padding: 10px;
+}
+
+#container {
+    display: flex;
+    padding: 10px;
+}
+
+#menu {
+background-color: darkseagreen;
+flex: 1;
+padding: 10px;
+margin: 5px;
+}
+
+#sight {
+background-color: lightblue;
+flex: 3;
+padding: 10px;
+margin: 5px;
+text-align: center;
+}
+
+#new_form {
+background-color: lightsalmon;
+flex: 2;
+padding: 10px;
+margin: 5px;
+text-align: center;
+}
+
+#footer {
+background-color: thistle;
+padding: 10px;
+}
