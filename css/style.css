@@ -23,6 +23,10 @@ padding: 10px;
 margin: 5px;
 }
 
+#buttons {
+    text-align: center;
+}
+
 #sights {
 background-color: lightblue;
 flex: 3;

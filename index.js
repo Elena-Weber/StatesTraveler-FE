@@ -1,77 +1,125 @@
 document.addEventListener("click", (event)=>{ console.log("You Just Clicked on ", event.target)})
 
-const sightsURL = "http://localhost:3000/sights"
-const statesURL = "http://localhost:3000/states"
+const baseURL = "http://localhost:3000/"
 
+let statesPage = 1
 
-init = () => {
+init =()=> {
+    getStates(),
     getSights(),
-    getStates()
+    addArrowsListeners(),
+    createSightForm()
 }
 
 document.addEventListener("DOMContentLoaded", init)
 
-const getSights = s => {
-    fetch(sightsURL)
+const getStates =(st)=> {
+    fetch(baseURL + `states/?_limit=10&_statesPage=${st}`)
     .then(resp => resp.json())
-    .then(sightsArray => { console.log(sightsArray);
+    .then(resp => {
+        //document.querySelector('#menu').innerHTML = 'States:';
+        for(let i = 0; i < resp.length; i++)
+        getState(resp[i])
+    })
+}
+// const getStates = st => {
+//     fetch(baseURL + `states/?_limit=25&_statesPage=${st}`)
+//     .then(resp => resp.json())
+//     .then(statesArray => { console.log(statesArray);
+//         addStatesToPage(statesArray)})
+// }
+const getSights =(s)=> {
+    fetch(baseURL + `sights`)
+    .then(resp => resp.json())
+    .then(sightsArray => { //console.log(sightsArray);
         addSightsToPage(sightsArray)})
 }
-const getStates = s => {
-    fetch(statesURL)
-    .then(resp => resp.json())
-    .then(statesArray => { console.log(statesArray);
-        addStatesToPage(statesArray)})
-}
 
-const addSightsToPage = (sights) => {
-sights.forEach(function(sight) {
-    getSight(sight)
-})
-}
-const addStatesToPage = (states) => {
+const addStatesToPage =(states)=> {
     states.forEach(function(state) {
         getState(state)
     })
 }
-
-const getSight = (sight) => {
-    const sightDiv = document.createElement('div'),
-    // sightDiv.classList.add("sightClass")
-    // sightDiv.setAttribute("data-id", sight.id)
-    // sightDiv.id = sight.id
-
-// sightDiv.innerHTML = `
-//     <h2 data-id="${sight.id}"> ${sight.name} </h2>
-//     <img src=${sight.image} class="sightPic" />
-//     <p> ${sight.likes} likes </p>
-//     <button data-id="${sight.id}" class="like-btn"> Like </button>
-//     <button data-id="${sight.id}" class="edit-btn"> Edit </button>
-//     <button data-id="${sight.id}" class="delete-btn"> Delete </button>
-// `
-    location = document.createElement('h2'),
-    pic = document.createElement('img'),
-    comments = document.createElement('p'),
-    state = document.createElement('p'),
-    likes = document.createElement('p');
-
-    location.innerHTML = `Location: ${sight.name}`,
-    pic.src = `${sight.image}`
-    comments.innerHTML = `Details: ${sight.details}`,
-    state.innerHTML = `State: ${sight.state_id}`,
-    likes.innerHTML = `${sight.likes} likes`,
-
-    sightDiv.appendChild(location),
-    sightDiv.appendChild(pic),
-    sightDiv.appendChild(comments),
-    sightDiv.appendChild(state),
-    sightDiv.appendChild(likes),
-    document.querySelector('#sights').appendChild(sightDiv)
+const addSightsToPage =(sights)=> {
+sights.forEach(function(sight) {
+    getSight(sight)
+})
 }
-const getState = (state) => {
+
+const getState =(state)=> {
     const stateDiv = document.createElement('div'),
     stateName = document.createElement('p')
     stateName.innerHTML = `${state.name}`
     stateDiv.appendChild(stateName)
     document.querySelector('#menu').appendChild(stateDiv)
+}
+const getSight =(sight)=> {
+    const sightDiv = document.createElement('div')
+    sightDiv.classList.add("sightClass")
+    sightDiv.setAttribute("data-id", sight.id)
+    sightDiv.id = sight.id
+
+    sightDiv.innerHTML = `
+    <h2 data-id="${sight.id}" class="sightName"> ${sight.name} </h2>
+    <img data-id="${sight.id}" src=${sight.image} class="sightPic" />
+    <p data-id="${sight.id}" class="sightDetails">Details: ${sight.details} </p>
+    <p data-id="${sight.id}" class="sightState">State: ${sight.state_id} </p>
+    <p data-id="${sight.id}"> ${sight.likes} likes </p>
+    <button data-id="${sight.id}" class="like-btn"> Like </button>
+    <button data-id="${sight.id}" class="edit-btn"> Edit </button>
+    <button data-id="${sight.id}" class="delete-btn"> Delete </button>
+`
+    // location = document.createElement('h2'),
+    // pic = document.createElement('img'),
+    // comments = document.createElement('p'),
+    // state = document.createElement('p'),
+    // likes = document.createElement('p');
+    // location.innerHTML = `Location: ${sight.name}`,
+    // pic.src = `${sight.image}`
+    // comments.innerHTML = `Details: ${sight.details}`,
+    // state.innerHTML = `State: ${sight.state_id}`,
+    // likes.innerHTML = `${sight.likes} likes`,
+    // sightDiv.appendChild(location),
+    // sightDiv.appendChild(pic),
+    // sightDiv.appendChild(comments),
+    // sightDiv.appendChild(state),
+    // sightDiv.appendChild(likes),
+    document.querySelector('#sights').appendChild(sightDiv)
+}
+
+addArrowsListeners =()=> {
+    let back = document.querySelector('#previous'),
+    forward = document.querySelector('#next');
+    back.addEventListener('click', () => {pageDown()}),
+    forward.addEventListener('click', () => {pageUp()})
+}
+
+pageUp =()=> {
+    statesPage < 5 ? (statesPage++, getStates(statesPage)) : alert('No more pages')
+    // statesPage++, getStates(statesPage)
+}
+
+pageDown =()=> {
+    1 < statesPage ? (statesPage--, getStates(statesPage)) : alert('No more pages')
+}
+
+createSightForm =()=> {
+const sightForm = document.createElement('form'),
+sightName = document.createElement('input'),
+sightImage = document.createElement('input'),
+sightDetails = document.createElement('input'),
+sightButton = document.createElement('button');
+sightForm.id = 'sight_form',
+sightName.id = 'sight_name',
+sightImage.id = 'sight_image',
+sightDetails.id = 'sight_details',
+sightName.placeholder = 'Sight location',
+sightImage.placeholder = 'Sight image',
+sightDetails.placeholder = 'Sight details',
+sightButton.innerHTML = 'Create sight',
+sightForm.appendChild(sightName),
+sightForm.appendChild(sightImage),
+sightForm.appendChild(sightDetails),
+sightForm.appendChild(sightButton),
+document.getElementById('new_form').appendChild(sightForm)
 }
