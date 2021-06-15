@@ -152,6 +152,18 @@ sightsColumn.addEventListener("click", event => {
         })
     }
 
+if(event.target.matches(".delete-btn")) {
+    const id = event.target.dataset.id
+    const sightToDelete = document.getElementById(id)
+    fetch(`http://localhost:3000/sights/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(resp => resp.json())
+    .then(sightToDelete.remove())
+}
+
+
 })
 
 createSightForm =()=> {
