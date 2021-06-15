@@ -35,12 +35,18 @@ margin: 5px;
 text-align: center;
 }
 
-#new_form {
+#third_column {
 background-color: lightsalmon;
 flex: 2;
 padding: 10px;
 margin: 5px;
 text-align: center;
+display: flex;
+flex-direction: column;
+}
+
+#single_sight {
+margin-top: 20px;
 }
 
 #footer {
