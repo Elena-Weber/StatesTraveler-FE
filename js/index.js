@@ -1,4 +1,6 @@
-document.addEventListener("click", (event)=>{ console.log("You Just Clicked on ", event.target)})
+document.addEventListener("click", (event)=>
+{ console.log("You Just Clicked on ", event.target)}
+)
 
 const baseURL = "http://localhost:3000/"
 
@@ -13,12 +15,12 @@ init =()=> {
 
 document.addEventListener("DOMContentLoaded", init)
 
-const getStates =(st)=> {
-    fetch(baseURL + `states/?_limit=10&_statesPage=${st}`)
+const getStates =(statesPage)=> {
+    fetch(baseURL + `states/?_limit=10&_page=${statesPage}`)
     .then(resp => resp.json())
     .then(resp => {
         //document.querySelector('#menu').innerHTML = 'States:';
-        for(let i = 0; i < resp.length; i++)
+        for(let i = 1; i < resp.length; i++)
         getState(resp[i])
     })
 }
@@ -47,9 +49,11 @@ sights.forEach(function(sight) {
 }
 
 const getState =(state)=> {
-    const stateDiv = document.createElement('div'),
+    const stateDiv = document.createElement('div')
     stateName = document.createElement('p')
     stateName.innerHTML = `${state.name}`
+    stateName.classList.add("stateClass")
+    stateName.id = state.id
     stateDiv.appendChild(stateName)
     document.querySelector('#menu').appendChild(stateDiv)
 }
@@ -64,7 +68,7 @@ const getSight =(sight)=> {
     <img data-id="${sight.id}" src=${sight.image} class="sightPic" />
     <p data-id="${sight.id}" class="sightDetails">Details: ${sight.details} </p>
     <p data-id="${sight.id}" class="sightState">State: ${sight.state_id} </p>
-    <p data-id="${sight.id}"> ${sight.likes} likes </p>
+    <p data-id="${sight.id}" class="sightLikes"> ${sight.likes} like(s) </p>
     <button data-id="${sight.id}" class="like-btn"> Like </button>
     <button data-id="${sight.id}" class="edit-btn"> Edit </button>
     <button data-id="${sight.id}" class="delete-btn"> Delete </button>
@@ -102,6 +106,31 @@ pageUp =()=> {
 pageDown =()=> {
     1 < statesPage ? (statesPage--, getStates(statesPage)) : alert('No more pages')
 }
+
+const sightsColumn = document.querySelector("#sights")
+sightsColumn.addEventListener("click", event => {
+    event.preventDefault();
+    if(event.target.matches(".like-btn")){
+        //const likesSection = event.target.closest(".sightLikes").querySelector("p")
+        const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
+        const likesCount = parseInt(likesSection.textContent)
+        const newLikes = likesCount + 1
+        const id = event.target.dataset.id
+        const sightObj = {
+            likes: newLikes
+        }
+        fetch(`http://localhost:3000/sights/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sightObj),
+        })
+        .then(resp => resp.json())
+        .then(updatedLikes => {
+            console.log(updatedLikes)
+            likesSection.textContent = `${updatedLikes.likes} Likes`
+        })
+    }
+})
 
 createSightForm =()=> {
 const sightForm = document.createElement('form'),
