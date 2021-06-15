@@ -70,6 +70,7 @@ const getSight =(sight)=> {
     <p data-id="${sight.id}" class="sightState">State: ${sight.state_id} </p>
     <p data-id="${sight.id}" class="sightLikes"> ${sight.likes} like(s) </p>
     <button data-id="${sight.id}" class="like-btn"> Like </button>
+    <button data-id="${sight.id}" class="dislike-btn"> Dislike </button>
     <button data-id="${sight.id}" class="edit-btn"> Edit </button>
     <button data-id="${sight.id}" class="delete-btn"> Delete </button>
 `
@@ -110,8 +111,8 @@ pageDown =()=> {
 const sightsColumn = document.querySelector("#sights")
 sightsColumn.addEventListener("click", event => {
     event.preventDefault();
+
     if(event.target.matches(".like-btn")){
-        //const likesSection = event.target.closest(".sightLikes").querySelector("p")
         const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
         const likesCount = parseInt(likesSection.textContent)
         const newLikes = likesCount + 1
@@ -127,9 +128,30 @@ sightsColumn.addEventListener("click", event => {
         .then(resp => resp.json())
         .then(updatedLikes => {
             console.log(updatedLikes)
-            likesSection.textContent = `${updatedLikes.likes} Likes`
+            likesSection.textContent = `${updatedLikes.likes} like(s)`
         })
     }
+
+    if(event.target.matches(".dislike-btn")){
+        const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
+        const likesCount = parseInt(likesSection.textContent)
+        const newLikes = likesCount - 1
+        const id = event.target.dataset.id
+        const sightObj = {
+            likes: newLikes
+        }
+        fetch(`http://localhost:3000/sights/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sightObj),
+        })
+        .then(resp => resp.json())
+        .then(updatedLikes => {
+            console.log(updatedLikes)
+            likesSection.textContent = `${updatedLikes.likes} like(s)`
+        })
+    }
+
 })
 
 createSightForm =()=> {
