@@ -53,3 +53,10 @@ margin-top: 20px;
 background-color: thistle;
 padding: 10px;
 }
+
+.stateClass:hover {
+cursor: pointer;
+}
+.sightName:hover {
+    cursor: pointer;
+    }

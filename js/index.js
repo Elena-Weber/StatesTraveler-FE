@@ -4,7 +4,7 @@ document.addEventListener("click", (event)=>
 
 const baseURL = "http://localhost:3000/"
 
-let statesPage = 1
+let page = 1
 
 init =()=> {
     getStates(),
@@ -16,21 +16,13 @@ init =()=> {
 
 document.addEventListener("DOMContentLoaded", init)
 
-const getStates =(statesPage)=> {
-    fetch(baseURL + `states/?_limit=10&_page=${statesPage}`)
+const getStates =(num)=> {
+    fetch(baseURL + `states/?_limit=10&_page=${num}`)
     .then(resp => resp.json())
-    .then(resp => {
-        //document.querySelector('#menu').innerHTML = 'States:';
-        for(let i = 1; i < resp.length; i++)
-        getState(resp[i])
-    })
+    .then(statesArray => { //console.log(statesArray);
+    addStatesToPage(statesArray)})
 }
-// const getStates = st => {
-//     fetch(baseURL + `states/?_limit=25&_statesPage=${st}`)
-//     .then(resp => resp.json())
-//     .then(statesArray => { console.log(statesArray);
-//         addStatesToPage(statesArray)})
-// }
+
 const getSights =(s)=> {
     fetch(baseURL + `sights`)
     .then(resp => resp.json())
@@ -55,9 +47,38 @@ const getState =(state)=> {
     stateName.innerHTML = `${state.name}`
     stateName.classList.add("stateClass")
     stateName.id = state.id
+    stateName.dataset.id = state.id
     stateDiv.appendChild(stateName)
     document.querySelector('#menu').appendChild(stateDiv)
+
+    stateName.addEventListener("click", event => {
+        if(event.target.className === "stateClass")
+        console.log(event)
+        showStateSights(event)
+    })
 }
+
+const showStateSights =(event)=> {
+
+    const sightsDiv = document.querySelector("#sights")
+    sightsDiv.innerHTML = ""
+    let id = event.target.dataset.id
+    fetch(`http://localhost:3000/states/${id}/sights`)
+    .then(resp => resp.json())
+    .then(sights => { console.log(sights);
+        if (sights.length === 0) {
+        console.log("empty")
+        sightsDiv.innerHTML = "You haven't visited this state yet."
+        } else {
+        sights.forEach(sight => {
+            getSight(sight)})
+            // const{id, name, image, details, likes, state_id} = sight
+            // new Sight(id, name, image, details, likes, state_id)
+        }
+        // addSightsToPage(sightsArray)
+    })
+}
+
 const getSight =(sight)=> {
     const sightDiv = document.createElement('div')
     sightDiv.classList.add("sightClass")
@@ -101,12 +122,11 @@ addArrowsListeners =()=> {
 }
 
 pageUp =()=> {
-    statesPage < 5 ? (statesPage++, getStates(statesPage)) : alert('No more pages')
-    // statesPage++, getStates(statesPage)
+    page < 5 ? (page++, getStates(page)) : alert('No more pages')
 }
 
 pageDown =()=> {
-    1 < statesPage ? (statesPage--, getStates(statesPage)) : alert('No more pages')
+    1 < page ? (page--, getStates(page)) : alert('No more pages')
 }
 
 const sightsColumn = document.querySelector("#sights")

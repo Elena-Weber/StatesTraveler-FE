@@ -1,7 +1,7 @@
 class API {
 
     static getSights() {
-        fetch("http://localhost:3000/" + `sights`)
+        fetch("http://localhost:3000/sights")
         .then(resp => resp.json())
         .then(sightsArray => { //console.log(sightsArray);
             sightsArray.forEach(sight => {
