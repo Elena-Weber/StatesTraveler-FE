@@ -7,12 +7,12 @@ const baseURL = "http://localhost:3000/"
 let page = 1
 
 init =()=> {
-    //getStates(),
     API.getStates(),
     API.getSights(),
     addArrowsListeners(),
     createSightForm(),
-    API.navi()
+    API.navi(),
+    API.sightButtons()
 }
 
 document.addEventListener("DOMContentLoaded", init)
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", init)
 //     addStatesToPage(statesArray)})
 // }
 
-//API, not working
+//API
 // const navi =()=> {
 //     const sightsDiv = document.querySelector("#sights")
 //     sightsDiv.innerHTML = ""
@@ -155,74 +155,74 @@ pageDown =()=> {
     1 < page ? (page--, getStates(page)) : alert('No more pages')
 }
 
-const sightsColumn = document.querySelector("#sights")
-sightsColumn.addEventListener("click", event => {
-    event.preventDefault();
+//Sight
+// const sightsColumn = document.querySelector("#sights")
+// sightsColumn.addEventListener("click", event => {
+//     event.preventDefault();
 
-    if(event.target.matches(".like-btn")){
-        const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
-        const likesCount = parseInt(likesSection.textContent)
-        const newLikes = likesCount + 1
-        const id = event.target.dataset.id
-        const sightObj = {
-            likes: newLikes
-        }
-        fetch(`http://localhost:3000/sights/${id}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(sightObj),
-        })
-        .then(resp => resp.json())
-        .then(updatedLikes => {
-            console.log(updatedLikes)
-            likesSection.textContent = `${updatedLikes.likes} like(s)`
-        })
-    }
+//     if(event.target.matches(".like-btn")){
+//         const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
+//         const likesCount = parseInt(likesSection.textContent)
+//         const newLikes = likesCount + 1
+//         const id = event.target.dataset.id
+//         const sightObj = {
+//             likes: newLikes
+//         }
+//         fetch(`http://localhost:3000/sights/${id}`, {
+//             method: "PATCH",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify(sightObj),
+//         })
+//         .then(resp => resp.json())
+//         .then(updatedLikes => {
+//             console.log(updatedLikes)
+//             likesSection.textContent = `${updatedLikes.likes} like(s)`
+//         })
+//     }
 
-    if(event.target.matches(".dislike-btn")){
-        const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
-        const likesCount = parseInt(likesSection.textContent)
-        const newLikes = likesCount - 1
-        const id = event.target.dataset.id
-        const sightObj = {
-            likes: newLikes
-        }
-        fetch(`http://localhost:3000/sights/${id}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(sightObj),
-        })
-        .then(resp => resp.json())
-        .then(updatedLikes => {
-            console.log(updatedLikes)
-            likesSection.textContent = `${updatedLikes.likes} like(s)`
-        })
-    }
+//     if(event.target.matches(".dislike-btn")){
+//         const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
+//         const likesCount = parseInt(likesSection.textContent)
+//         const newLikes = likesCount - 1
+//         const id = event.target.dataset.id
+//         const sightObj = {
+//             likes: newLikes
+//         }
+//         fetch(`http://localhost:3000/sights/${id}`, {
+//             method: "PATCH",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify(sightObj),
+//         })
+//         .then(resp => resp.json())
+//         .then(updatedLikes => {
+//             console.log(updatedLikes)
+//             likesSection.textContent = `${updatedLikes.likes} like(s)`
+//         })
+//     }
 
-    if(event.target.matches(".delete-btn")) {
-        const id = event.target.dataset.id
-        const sightToDelete = document.getElementById(id)
-        fetch(`http://localhost:3000/sights/${id}`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" }
-        })
-        .then(resp => resp.json())
-        .then(sightToDelete.remove())
-    }
+//     if(event.target.matches(".delete-btn")) {
+//         const id = event.target.dataset.id
+//         const sightToDelete = document.getElementById(id)
+//         fetch(`http://localhost:3000/sights/${id}`, {
+//             method: "DELETE",
+//             headers: { "Content-Type": "application/json" }
+//         })
+//         .then(resp => resp.json())
+//         .then(sightToDelete.remove())
+//     }
 
-    if(event.target.matches(".edit-btn")) {
-        const id = event.target.dataset.id
-        const sightToEdit = document.getElementById(id)
-        console.log(sightToEdit)
-        fetch(`http://localhost:3000/sights/${id}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" }
-        })
-        .then(resp => resp.json())
-        
-    }
+//     if(event.target.matches(".edit-btn")) {
+//         const id = event.target.dataset.id
+//         const sightToEdit = document.getElementById(id)
+//         console.log(sightToEdit)
+//         fetch(`http://localhost:3000/sights/${id}`, {
+//             method: "PATCH",
+//             headers: { "Content-Type": "application/json" }
+//         })
+//         .then(resp => resp.json())
+//     }
+// })
 
-})
 //select not working
 createSightForm =()=> {
     const sightForm = document.createElement('form')
