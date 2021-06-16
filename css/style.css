@@ -8,7 +8,6 @@ img {
 
 #navi {
 background-color: burlywood;
-padding: 10px;
 }
 
 #container {
@@ -59,4 +58,10 @@ cursor: pointer;
 }
 .sightName:hover {
     cursor: pointer;
-    }
+}
+#title {
+    padding: 5px;
+}
+#title:hover {
+    cursor: pointer;
+}

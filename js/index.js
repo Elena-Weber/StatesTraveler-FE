@@ -7,112 +7,138 @@ const baseURL = "http://localhost:3000/"
 let page = 1
 
 init =()=> {
-    getStates(),
-    getSights(),
+    //getStates(),
+    API.getStates(),
+    API.getSights(),
     addArrowsListeners(),
-    createSightForm()//,
-    //getSingleSight()
+    createSightForm(),
+    navi()
 }
 
 document.addEventListener("DOMContentLoaded", init)
 
-const getStates =(num)=> {
-    fetch(baseURL + `states/?_limit=10&_page=${num}`)
-    .then(resp => resp.json())
-    .then(statesArray => { //console.log(statesArray);
-    addStatesToPage(statesArray)})
-}
+// State
+// const getStates =(num)=> {
+//     fetch(baseURL + `states/?_limit=10&_page=${num}`)
+//     .then(resp => resp.json())
+//     .then(statesArray => { //console.log(statesArray);
+//     addStatesToPage(statesArray)})
+// }
 
-const getSights =(s)=> {
-    fetch(baseURL + `sights`)
-    .then(resp => resp.json())
-    .then(sightsArray => { //console.log(sightsArray);
-        addSightsToPage(sightsArray)})
-}
-
-const addStatesToPage =(states)=> {
-    states.forEach(function(state) {
-        getState(state)
-    })
-}
-const addSightsToPage =(sights)=> {
-sights.forEach(function(sight) {
-    getSight(sight)
-})
-}
-
-const getState =(state)=> {
-    const stateDiv = document.createElement('div')
-    stateName = document.createElement('p')
-    stateName.innerHTML = `${state.name}`
-    stateName.classList.add("stateClass")
-    stateName.id = state.id
-    stateName.dataset.id = state.id
-    stateDiv.appendChild(stateName)
-    document.querySelector('#menu').appendChild(stateDiv)
-
-    stateName.addEventListener("click", event => {
-        if(event.target.className === "stateClass")
-        console.log(event)
-        showStateSights(event)
-    })
-}
-
-const showStateSights =(event)=> {
-
+//not working
+const navi =()=> {
     const sightsDiv = document.querySelector("#sights")
     sightsDiv.innerHTML = ""
-    let id = event.target.dataset.id
-    fetch(`http://localhost:3000/states/${id}/sights`)
+
+    const title = document.querySelector("#title")
+    title.addEventListener("click", event => {
+        //console.log("title clicked")
+    fetch("http://localhost:3000/states")
     .then(resp => resp.json())
-    .then(sights => { console.log(sights);
-        if (sights.length === 0) {
-        console.log("empty")
-        sightsDiv.innerHTML = "You haven't visited this state yet."
-        } else {
-        sights.forEach(sight => {
-            getSight(sight)})
-            // const{id, name, image, details, likes, state_id} = sight
-            // new Sight(id, name, image, details, likes, state_id)
-        }
-        // addSightsToPage(sightsArray)
+    .then(statesArray => { console.log(statesArray);
+    addStatesToPage(statesArray)})
     })
 }
 
-const getSight =(sight)=> {
-    const sightDiv = document.createElement('div')
-    sightDiv.classList.add("sightClass")
-    sightDiv.setAttribute("data-id", sight.id)
-    sightDiv.id = sight.id
+//Sight
+// const getSights =(s)=> {
+//     fetch(baseURL + `sights`)
+//     .then(resp => resp.json())
+//     .then(sightsArray => { //console.log(sightsArray);
+//         addSightsToPage(sightsArray)})
+// }
 
-    sightDiv.innerHTML = `
-    <h2 data-id="${sight.id}" class="sightName"> ${sight.name} </h2>
-    <img data-id="${sight.id}" src=${sight.image} class="sightPic" />
-    <p data-id="${sight.id}" class="sightDetails">Details: ${sight.details} </p>
-    <p data-id="${sight.id}" class="sightState">State: ${sight.state_id} </p>
-    <p data-id="${sight.id}" class="sightLikes"> ${sight.likes} like(s) </p>
-    <button data-id="${sight.id}" class="like-btn"> Like </button>
-    <button data-id="${sight.id}" class="dislike-btn"> Dislike </button>
-    <button data-id="${sight.id}" class="edit-btn"> Edit </button>
-    <button data-id="${sight.id}" class="delete-btn"> Delete </button>
-`
-    // location = document.createElement('h2'),
-    // pic = document.createElement('img'),
-    // comments = document.createElement('p'),
-    // state = document.createElement('p'),
-    // likes = document.createElement('p');
-    // location.innerHTML = `Location: ${sight.name}`,
-    // pic.src = `${sight.image}`
-    // comments.innerHTML = `Details: ${sight.details}`,
-    // state.innerHTML = `State: ${sight.state_id}`,
-    // likes.innerHTML = `${sight.likes} likes`,
-    // sightDiv.appendChild(location),
-    // sightDiv.appendChild(pic),
-    // sightDiv.appendChild(comments),
-    // sightDiv.appendChild(state),
-    // sightDiv.appendChild(likes),
-    document.querySelector('#sights').appendChild(sightDiv)
-}
+// State
+// const addStatesToPage =(states)=> {
+//     states.forEach(function(state) {
+//         getState(state)
+//     })
+// }
+
+//Sight
+// const addSightsToPage =(sights)=> {
+// sights.forEach(function(sight) {
+//     getSight(sight)
+// })
+// }
+
+// State
+// const getState =(state)=> {
+//     const stateDiv = document.createElement('div')
+//     stateName = document.createElement('p')
+//     stateName.innerHTML = `${state.name}`
+//     stateName.classList.add("stateClass")
+//     stateName.id = state.id
+//     stateName.dataset.id = state.id
+//     stateDiv.appendChild(stateName)
+//     document.querySelector('#menu').appendChild(stateDiv)
+
+//     stateName.addEventListener("click", event => {
+//         if(event.target.className === "stateClass") {
+//             console.log(event)
+//         showStateSights(event)
+//         }
+        
+//     })
+// }
+
+// State
+// const showStateSights =(event)=> {
+//     const sightsDiv = document.querySelector("#sights")
+//     sightsDiv.innerHTML = ""
+//     let id = event.target.dataset.id
+//     fetch(`http://localhost:3000/states/${id}/sights`)
+//     .then(resp => resp.json())
+//     .then(sights => { console.log(sights);
+//         if (sights.length === 0) {
+//             console.log("empty")
+//             sightsDiv.innerHTML = "You haven't added any sights here or visited this state yet. Try adding some, choose a different state or check out the sights in all the states."
+//         } else {
+//             sightsDiv.innerHTML = "Here's what you've visited in this state:"
+//             sights.forEach(sight => {
+//                 getSight(sight)})
+//             // const{id, name, image, details, likes, state_id} = sight
+//             // new Sight(id, name, image, details, likes, state_id)
+//         }
+//         // addSightsToPage(sightsArray)
+//     })
+// }
+
+//Sight
+// const getSight =(sight)=> {
+//     const sightDiv = document.createElement('div')
+//     sightDiv.classList.add("sightClass")
+//     sightDiv.setAttribute("data-id", sight.id)
+//     sightDiv.id = sight.id
+
+//     sightDiv.innerHTML = `
+//     <h2 data-id="${sight.id}" class="sightName"> ${sight.name} </h2>
+//     <img data-id="${sight.id}" src=${sight.image} class="sightPic" />
+//     <p data-id="${sight.id}" class="sightDetails">Details: ${sight.details} </p>
+//     <p data-id="${sight.id}" class="sightState">State: ${sight.state_id} </p>
+//     <p data-id="${sight.id}" class="sightLikes"> ${sight.likes} like(s) </p>
+//     <button data-id="${sight.id}" class="like-btn"> Like </button>
+//     <button data-id="${sight.id}" class="dislike-btn"> Dislike </button>
+//     <button data-id="${sight.id}" class="edit-btn"> Edit </button>
+//     <button data-id="${sight.id}" class="delete-btn"> Delete </button>
+// `
+//     // location = document.createElement('h2'),
+//     // pic = document.createElement('img'),
+//     // comments = document.createElement('p'),
+//     // state = document.createElement('p'),
+//     // likes = document.createElement('p');
+//     // location.innerHTML = `Location: ${sight.name}`,
+//     // pic.src = `${sight.image}`
+//     // comments.innerHTML = `Details: ${sight.details}`,
+//     // state.innerHTML = `State: ${sight.state_id}`,
+//     // likes.innerHTML = `${sight.likes} likes`,
+//     // sightDiv.appendChild(location),
+//     // sightDiv.appendChild(pic),
+//     // sightDiv.appendChild(comments),
+//     // sightDiv.appendChild(state),
+//     // sightDiv.appendChild(likes),
+//     document.querySelector('#sights').appendChild(sightDiv)
+// }
 
 addArrowsListeners =()=> {
     let back = document.querySelector('#previous'),
@@ -197,7 +223,7 @@ sightsColumn.addEventListener("click", event => {
     }
 
 })
-
+//select not working
 createSightForm =()=> {
     const sightForm = document.createElement('form')
     sightName = document.createElement('input')
@@ -223,7 +249,7 @@ createSightForm =()=> {
     sightForm.appendChild(sightButton)
     document.getElementById('new_form').appendChild(sightForm)
 }
-
+//not working yet
 getSingleSight =(sight)=> {
     const chosenSight = document.querySelector(".sightName")
     chosenSight.dataset.id = sight.id
@@ -232,7 +258,7 @@ getSingleSight =(sight)=> {
     renderSingleSight()
     })
 }
-
+//not working yet
 renderSingleSight =()=> {
     const sightDiv = document.createElement('div')
     sightDiv.classList.add("singleSight")
