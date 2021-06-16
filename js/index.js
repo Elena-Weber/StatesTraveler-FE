@@ -12,7 +12,8 @@ init =()=> {
     addArrowsListeners(),
     createSightForm(),
     API.navi(),
-    API.sightButtons()
+    API.sightButtons()//,
+    //API.createSightForm()
 }
 
 document.addEventListener("DOMContentLoaded", init)
@@ -223,7 +224,7 @@ pageDown =()=> {
 //     }
 // })
 
-//select not working
+//API, select not working
 createSightForm =()=> {
     const sightForm = document.createElement('form')
     sightName = document.createElement('input')
@@ -237,10 +238,20 @@ createSightForm =()=> {
     sightDetails.id = 'sight_details'
     sightState.id = 'sight_state'
     sightButton.id = 'sight_button'
-    sightName.placeholder = 'Name'
+    sightName.placeholder = 'Sight name'
     sightImage.placeholder = 'Image path'
     sightDetails.placeholder = 'Impressions'
-    //sightState.meaning = State.all
+    
+const statesArray = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+statesArray.forEach(st => {
+    let opt = document.createElement('option')
+    opt.appendChild(document.createTextNode(st))
+    opt.value = 'option value'
+    opt.className = "stateOptions"
+    sightState.appendChild(opt)
+    //console.log(opt)
+})
+
     sightButton.innerHTML = 'Create a sight'
     sightForm.appendChild(sightName)
     sightForm.appendChild(sightImage)
@@ -249,6 +260,7 @@ createSightForm =()=> {
     sightForm.appendChild(sightButton)
     document.getElementById('new_form').appendChild(sightForm)
 }
+
 //not working yet
 getSingleSight =(sight)=> {
     const chosenSight = document.querySelector(".sightName")

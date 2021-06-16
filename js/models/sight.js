@@ -32,6 +32,7 @@ getSight =(sight)=> {
     document.querySelector('#sights').appendChild(sightDiv)
     }
 
+
 // sightButtons =()=> {
 //     const sightsColumn = document.querySelector("#sights")
 //     sightsColumn.addEventListener("click", event => {
