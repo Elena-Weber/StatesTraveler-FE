@@ -11,7 +11,7 @@ class State {
         const stateName = document.createElement('p')
         stateName.id = this.id
         stateName.dataset.id = this.id
-        stateName.classList.add("stateClass")
+        //stateName.classList.add("stateClass")
         //stateName.innerHTML += this.showHTML()
         stateName.innerHTML = `
         <p data-id="${this.id}" class="stateClass">${this.name}</p>

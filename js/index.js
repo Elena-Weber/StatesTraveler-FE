@@ -12,7 +12,7 @@ init =()=> {
     API.getSights(),
     addArrowsListeners(),
     createSightForm(),
-    navi()
+    API.navi()
 }
 
 document.addEventListener("DOMContentLoaded", init)
@@ -25,20 +25,20 @@ document.addEventListener("DOMContentLoaded", init)
 //     addStatesToPage(statesArray)})
 // }
 
-//not working
-const navi =()=> {
-    const sightsDiv = document.querySelector("#sights")
-    sightsDiv.innerHTML = ""
+//API, not working
+// const navi =()=> {
+//     const sightsDiv = document.querySelector("#sights")
+//     sightsDiv.innerHTML = ""
 
-    const title = document.querySelector("#title")
-    title.addEventListener("click", event => {
-        //console.log("title clicked")
-    fetch("http://localhost:3000/states")
-    .then(resp => resp.json())
-    .then(statesArray => { console.log(statesArray);
-    addStatesToPage(statesArray)})
-    })
-}
+//     const title = document.querySelector("#title")
+//     title.addEventListener("click", event => {
+//         console.log("title clicked")
+//     fetch("http://localhost:3000/states")
+//     .then(resp => resp.json())
+//     .then(statesArray => { console.log(statesArray);
+//     addStatesToPage(statesArray)})
+//     })
+// }
 
 //Sight
 // const getSights =(s)=> {

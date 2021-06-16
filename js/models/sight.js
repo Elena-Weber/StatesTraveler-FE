@@ -32,6 +32,7 @@ getSight =(sight)=> {
     }
 
 
+
     // getSights =(s)=> {
     //     fetch(baseURL + `sights`)
     //     .then(resp => resp.json())
