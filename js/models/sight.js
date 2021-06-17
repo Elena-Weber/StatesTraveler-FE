@@ -12,16 +12,11 @@ constructor(id, name, image, details, likes, state_id) {
     //this.sightButtons()
 }
 
-getSight =(sight)=> {
-    const sightDiv = document.createElement('div')
-    sightDiv.classList.add("sightClass")
-    sightDiv.setAttribute("data-id", this.id)
-    sightDiv.id = this.id
-
-    sightDiv.innerHTML = `
+sightCard =()=> {
+    return `
     <h2 data-id="${this.id}" class="sightName"> ${this.name} </h2>
     <img data-id="${this.id}" src=${this.image} class="sightPic" />
-    <p data-id="${this.id}" class="sightDetails">Details: ${this.details} </p>
+    <p data-id="${this.id}" class="sightDetails"> ${this.details} </p>
     <p data-id="${this.id}" class="sightState">State: ${this.state_id} </p>
     <p data-id="${this.id}" class="sightLikes"> ${this.likes} like(s) </p>
     <button data-id="${this.id}" class="like-btn"> Like </button>
@@ -29,8 +24,71 @@ getSight =(sight)=> {
     <button data-id="${this.id}" class="edit-btn"> Edit </button>
     <button data-id="${this.id}" class="delete-btn"> Delete </button>
     `
+}
+
+getSight =(sight)=> {
+    const sightDiv = document.createElement('div')
+    sightDiv.classList.add("sightClass")
+    sightDiv.setAttribute("data-id", this.id)
+    sightDiv.id = this.id
+    sightDiv.innerHTML = this.sightCard()
     document.querySelector('#sights').appendChild(sightDiv)
-    }
+
+    sightDiv.addEventListener("click", event => {
+
+        if(event.target.matches(".edit-btn")) {
+            const sightToEditForm = document.createElement("form")
+            sightToEditForm.innerHTML = `
+            <h4>You can edit this sight here:</h4>
+            <form class="sight-edit-form">
+            <button class="close-button">Changed your mind? Just click here!</button>
+            <br>
+            <h5>Sight name:</h5>
+            <input type="text" name="name"
+            value="${sightDiv.querySelector("h2").innerText}"
+            placeholder="${sightDiv.querySelector("h2").innerText}"
+            class="name-edit"/>
+            <br>
+            <h5>Image path:</h5>
+            <input type="text" name="image"
+            value="${sightDiv.querySelector("img").src}"
+            placeholder="${sightDiv.querySelector("img").src}"
+            class="image-edit"/>        
+            <br>
+            <h5>Impressions:</h5>
+            <input type="text" name="details"
+            value="${sightDiv.querySelector("p").innerText}"
+            placeholder="${sightDiv.querySelector("p").innerText}"
+            class="details-edit"/><br><br>
+            <input type="submit" name="submit"
+            value="Update this sight"
+            class="submit-button"/>
+            </form>
+            <br><br><br>
+            `
+            sightDiv.append(sightToEditForm)
+
+            const notEdit = sightToEditForm.querySelector(".close-button")
+            notEdit.addEventListener("click", () => {
+                sightToEditForm.remove()
+            })
+
+        }
+
+        
+
+
+        // const id = event.target.dataset.id
+        // const sightToEdit = document.getElementById(id)
+        // console.log(sightToEdit)
+        // fetch(`http://localhost:3000/sights/${id}`, {
+        //     method: "PATCH",
+        //     headers: { "Content-Type": "application/json" }
+        // })
+        // .then(resp => resp.json())
+
+    })
+}
 
     // createSight =(event)=> {
     //     let createForm = document.querySelector("#new_form")
@@ -132,17 +190,5 @@ getSight =(sight)=> {
     
 //     })}
 
-    // getSights =(s)=> {
-    //     fetch(baseURL + `sights`)
-    //     .then(resp => resp.json())
-    //     .then(sightsArray => {
-    //         addSightsToPage(sightsArray)})
-    // }
-
-    // addSightsToPage =(sights)=> {
-    //     sights.forEach(function(sight) {
-    //         getSight(sight)
-    //     })
-    // }
 
 }

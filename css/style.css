@@ -26,6 +26,12 @@ margin: 5px;
     text-align: center;
 }
 
+input {
+width: 50%;
+padding: 5px;
+border-radius: 3px;
+}
+
 #sights {
 background-color: lightblue;
 flex: 3;
