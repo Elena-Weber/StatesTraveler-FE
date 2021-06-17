@@ -37,6 +37,7 @@ getSight =(sight)=> {
     sightDiv.addEventListener("click", event => {
 
         if(event.target.matches(".edit-btn")) {
+            const sightToUpdate = event.target.closest(".sightClass")
             const sightToEditForm = document.createElement("form")
             sightToEditForm.innerHTML = `
             <h4>You can edit this sight here:</h4>
@@ -59,7 +60,10 @@ getSight =(sight)=> {
             <input type="text" name="details"
             value="${sightDiv.querySelector("p").innerText}"
             placeholder="${sightDiv.querySelector("p").innerText}"
-            class="details-edit"/><br><br>
+            class="details-edit"/><br>
+            <br>
+            <select name="states">123</select>
+            <br>
             <input type="submit" name="submit"
             value="Update this sight"
             class="submit-button"/>
@@ -71,6 +75,38 @@ getSight =(sight)=> {
             const notEdit = sightToEditForm.querySelector(".close-button")
             notEdit.addEventListener("click", () => {
                 sightToEditForm.remove()
+            })
+
+            sightToEditForm.addEventListener("click", (event) => {
+                event.preventDefault();
+                if(event.target.matches(".submit-button")) {
+                    let editedName = sightToEditForm.querySelector(".name-edit").value
+                    let editedImage = sightToEditForm.querySelector(".image-edit").value
+                    let editedDetails = sightToEditForm.querySelector(".details-edit").value
+
+                    const sightObject = {
+                        name: editedName,
+                        image: editedImage,
+                        details: editedDetails
+                    }
+
+                    const sightID = sightToUpdate.id
+                    fetch(`http://localhost:3000/sights/${sightID}`, {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(sightObject)
+                    })
+                    .then(resp => resp.json())
+                    .then(editedSight => {
+                        sightToUpdate.querySelector("h2").innerText = editedSight.name
+                        sightToUpdate.querySelector("img").src = editedSight.image
+                        sightToUpdate.querySelector("p").innerText = editedSight.details
+                    })
+                    .then(API.getSights())
+                    .then(sightToEditForm.remove())
+                }
+
+
             })
 
         }

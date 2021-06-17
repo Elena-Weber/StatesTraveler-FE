@@ -91,18 +91,6 @@ class API {
                 .then( console.log(sightToDelete),
                     sightToDelete.remove())
             }
-        
-            // if(event.target.matches(".edit-btn")) {
-            //     const id = event.target.dataset.id
-            //     const sightToEdit = document.getElementById(id)
-            //     console.log(sightToEdit)
-            //     fetch(`http://localhost:3000/sights/${id}`, {
-            //         method: "PATCH",
-            //         headers: { "Content-Type": "application/json" }
-            //     })
-            //     .then(resp => resp.json())
-
-            // }
         })
     }
 
