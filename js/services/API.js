@@ -28,15 +28,7 @@ class API {
         title.addEventListener("click", event => { event.preventDefault()
             //console.log("title clicked")
             sightsDiv.innerHTML = ""
-        this.getSights()    
-        // fetch("http://localhost:3000/sights")
-        // .then(resp => resp.json())
-        // .then(sights => { //console.log(sights);
-        //     sights.forEach(sight => {
-        //         const{id, name, image, details, likes, state_id} = sight
-        //         new Sight(id, name, image, details, likes, state_id)
-        //     })
-        // })
+        this.getSights()
         })
     }
 

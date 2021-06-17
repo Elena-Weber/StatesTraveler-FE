@@ -11,6 +11,7 @@ init =()=> {
     API.getSights(),
     addArrowsListeners(),
     createSightForm(),
+    createSight(),
     API.navi(),
     API.sightButtons()//,
     //API.createSightForm()
@@ -232,24 +233,25 @@ createSightForm =()=> {
     sightDetails = document.createElement('input')
     sightState = document.createElement('select')
     sightButton = document.createElement('button')
-    sightForm.id = 'sight_form'
-    sightName.id = 'sight_name'
-    sightImage.id = 'sight_image'
-    sightDetails.id = 'sight_details'
-    sightState.id = 'sight_state'
-    sightButton.id = 'sight_button'
+    sightForm.id = 'sightForm'
+    sightName.id = 'sightName'
+    sightImage.id = 'sightImage'
+    sightDetails.id = 'sightDetails'
+    sightState.id = 'sightState'
+    sightButton.id = 'sightButton'
     sightName.placeholder = 'Sight name'
     sightImage.placeholder = 'Image path'
     sightDetails.placeholder = 'Impressions'
     
 const statesArray = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
-statesArray.forEach(st => {
+statesArray.forEach((st, i) => {
+    //st.id = sight.state_id
     let opt = document.createElement('option')
     opt.appendChild(document.createTextNode(st))
-    opt.value = 'option value'
+    opt.value = i + 1
     opt.className = "stateOptions"
     sightState.appendChild(opt)
-    //console.log(opt)
+    console.log(st)
 })
 
     sightButton.innerHTML = 'Create a sight'
@@ -261,32 +263,63 @@ statesArray.forEach(st => {
     document.getElementById('new_form').appendChild(sightForm)
 }
 
-//not working yet
-getSingleSight =(sight)=> {
-    const chosenSight = document.querySelector(".sightName")
-    chosenSight.dataset.id = sight.id
-    chosenSight.addEventListener("click", event => {
-    console.log(chosenSight)
-    renderSingleSight()
+createSight =()=> {
+    const createForm = document.querySelector("#sightForm")
+    createForm.addEventListener("submit", event => {
+        event.preventDefault();
+        //console.log("submit button clicked")
+        const name = event.target.sightName.value
+        const image = event.target.sightImage.value
+        const details = event.target.sightDetails.value
+        const state_id = event.target.sightState.value
+        const submit = event.target.submit
+        //console.log("submitting this:", submit)
+        fetch("http://localhost:3000/sights", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "name": name,
+                "image": image,
+                "details": details,
+                "likes": 0,
+                "state_id": state_id
+            })
+        })
+        .then(resp => resp.json())
+        .then(newSight =>
+            Sight.getSight(newSight))
+            //await Sight.getSight(newSight))
+        event.target.reset()
+        console.log("I'm here")
     })
 }
+
 //not working yet
-renderSingleSight =()=> {
-    const sightDiv = document.createElement('div')
-    sightDiv.classList.add("singleSight")
-    sightDiv.setAttribute("data-id", sight.id)
-    sightDiv.id = sight.id
+// getSingleSight =(sight)=> {
+//     const chosenSight = document.querySelector(".sightName")
+//     chosenSight.dataset.id = sight.id
+//     chosenSight.addEventListener("click", event => {
+//     console.log(chosenSight)
+//     renderSingleSight()
+//     })
+// }
+//not working yet
+// renderSingleSight =()=> {
+//     const sightDiv = document.createElement('div')
+//     sightDiv.classList.add("singleSight")
+//     sightDiv.setAttribute("data-id", sight.id)
+//     sightDiv.id = sight.id
     
-    sightDiv.innerHTML = `
-    <h2 data-id="${sight.id}" class="sightName"> ${sight.name} </h2>
-    <img data-id="${sight.id}" src=${sight.image} class="sightPic" />
-    <p data-id="${sight.id}" class="sightDetails">Details: ${sight.details} </p>
-    <p data-id="${sight.id}" class="sightState">State: ${sight.state_id} </p>
-    <p data-id="${sight.id}" class="sightLikes"> ${sight.likes} like(s) </p>
-    <button data-id="${sight.id}" class="like-btn"> Like </button>
-    <button data-id="${sight.id}" class="dislike-btn"> Dislike </button>
-    <button data-id="${sight.id}" class="edit-btn"> Edit </button>
-    <button data-id="${sight.id}" class="delete-btn"> Delete </button>
-    `
-    document.querySelector('single_sight').appendChild(sightDiv)
-}
+//     sightDiv.innerHTML = `
+//     <h2 data-id="${sight.id}" class="sightName"> ${sight.name} </h2>
+//     <img data-id="${sight.id}" src=${sight.image} class="sightPic" />
+//     <p data-id="${sight.id}" class="sightDetails">Details: ${sight.details} </p>
+//     <p data-id="${sight.id}" class="sightState">State: ${sight.state_id} </p>
+//     <p data-id="${sight.id}" class="sightLikes"> ${sight.likes} like(s) </p>
+//     <button data-id="${sight.id}" class="like-btn"> Like </button>
+//     <button data-id="${sight.id}" class="dislike-btn"> Dislike </button>
+//     <button data-id="${sight.id}" class="edit-btn"> Edit </button>
+//     <button data-id="${sight.id}" class="delete-btn"> Delete </button>
+//     `
+//     document.querySelector('single_sight').appendChild(sightDiv)
+// }

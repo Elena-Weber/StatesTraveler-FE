@@ -32,6 +32,33 @@ getSight =(sight)=> {
     document.querySelector('#sights').appendChild(sightDiv)
     }
 
+    // createSight =(event)=> {
+    //     let createForm = document.querySelector("#new_form")
+    //     sightButton.addEventListener("submit", event => {
+    //         event.preventDefault();
+    //         console.log("submit button clicked")
+    //         const name = event.target.name.value
+    //         const image = event.target.image.value
+    //         const details = event.target.details.value
+    //         const stateId = event.target.state_id.value
+    //         const submit = event.target.submit
+    //         console.log("submitting this:", submit)
+    //         fetch("http://localhost:3000/sights", {
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({
+    //                 "name": name,
+    //                 "image": image,
+    //                 "details": details,
+    //                 "likes": 0,
+    //                 "state_id": state_id
+    //             })
+    //         })
+    //         .then(resp => resp.json())
+    //         .then((newSight) => Sight.getSight(newSight))
+    //         event.target.reset()
+    //     })
+    // }
 
 // sightButtons =()=> {
 //     const sightsColumn = document.querySelector("#sights")
