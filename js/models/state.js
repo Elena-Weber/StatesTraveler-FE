@@ -35,9 +35,9 @@ class State {
         .then(sights => { console.log(sights);
             if (sights.length === 0) {
                 //console.log("no sights in this state")
-                sightsDiv.innerHTML = "You haven't added any sights here or visited this state yet. Try adding some, choose a different state or check out the sights in all the states."
+                sightsDiv.innerHTML = "<h3>You haven't added any sights here or visited this state yet. Try adding some, choose a different state or check out the sights in all the states. There are so many beautiful places in the USA! 🇺🇸</h3><br><br><br><img src=\"https://images.unsplash.com/photo-1510797215324-95aa89f43c33?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80\">"
             } else {
-                sightsDiv.innerHTML = "Here's what you've visited in this state:"
+                sightsDiv.innerHTML = "<h3>Here's what you've visited in this state:</h3>"
                 sights.forEach(sight => {
                 const{id, name, image, details, likes, state_id} = sight
                 new Sight(id, name, image, details, likes, state_id)
