@@ -102,29 +102,16 @@ getSight =(sight)=> {
                         sightToUpdate.querySelector("img").src = editedSight.image
                         sightToUpdate.querySelector("p").innerText = editedSight.details
                     })
-                    .then(API.getSights())
                     .then(sightToEditForm.remove())
                 }
-
-
             })
-
         }
-
-        
-
-
-        // const id = event.target.dataset.id
-        // const sightToEdit = document.getElementById(id)
-        // console.log(sightToEdit)
-        // fetch(`http://localhost:3000/sights/${id}`, {
-        //     method: "PATCH",
-        //     headers: { "Content-Type": "application/json" }
-        // })
-        // .then(resp => resp.json())
-
     })
 }
+
+
+
+
 
     // createSight =(event)=> {
     //     let createForm = document.querySelector("#new_form")

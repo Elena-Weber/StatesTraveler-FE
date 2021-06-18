@@ -82,12 +82,11 @@ padding: 10px;
 .stateClass:hover {
 cursor: pointer;
 }
-.sightName:hover {
-    cursor: pointer;
-}
+
 #title {
     padding: 5px;
 }
+
 #title:hover {
     cursor: pointer;
 }

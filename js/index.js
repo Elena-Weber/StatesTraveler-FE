@@ -1,110 +1,27 @@
-document.addEventListener("click", (event)=>
-{ console.log("You Just Clicked on ", event.target)}
-)
+document.addEventListener("click", (event) =>{
+    console.log("You Just Clicked on ", event.target)
+})
 
 const baseURL = "http://localhost:3000/"
 
-let page = 1
+//let page = 1
 
 init =()=> {
     API.getStates(),
     API.getSights(),
-    addArrowsListeners(),
+    //addArrowsListeners(),
     createSightForm(),
     createSight(),
     API.navi(),
-    API.sightButtons()//,
-    //API.createSightForm()
+    API.sightButtons()
 }
+
+//let preventMultipleEdit = true;
 
 document.addEventListener("DOMContentLoaded", init)
 
-// State
-// const getStates =(num)=> {
-//     fetch(baseURL + `states/?_limit=10&_page=${num}`)
-//     .then(resp => resp.json())
-//     .then(statesArray => { //console.log(statesArray);
-//     addStatesToPage(statesArray)})
-// }
 
-//API
-// const navi =()=> {
-//     const sightsDiv = document.querySelector("#sights")
-//     sightsDiv.innerHTML = ""
 
-//     const title = document.querySelector("#title")
-//     title.addEventListener("click", event => {
-//         console.log("title clicked")
-//     fetch("http://localhost:3000/states")
-//     .then(resp => resp.json())
-//     .then(statesArray => { console.log(statesArray);
-//     addStatesToPage(statesArray)})
-//     })
-// }
-
-//Sight
-// const getSights =(s)=> {
-//     fetch(baseURL + `sights`)
-//     .then(resp => resp.json())
-//     .then(sightsArray => { //console.log(sightsArray);
-//         addSightsToPage(sightsArray)})
-// }
-
-// State
-// const addStatesToPage =(states)=> {
-//     states.forEach(function(state) {
-//         getState(state)
-//     })
-// }
-
-//Sight
-// const addSightsToPage =(sights)=> {
-// sights.forEach(function(sight) {
-//     getSight(sight)
-// })
-// }
-
-// State
-// const getState =(state)=> {
-//     const stateDiv = document.createElement('div')
-//     stateName = document.createElement('p')
-//     stateName.innerHTML = `${state.name}`
-//     stateName.classList.add("stateClass")
-//     stateName.id = state.id
-//     stateName.dataset.id = state.id
-//     stateDiv.appendChild(stateName)
-//     document.querySelector('#menu').appendChild(stateDiv)
-
-//     stateName.addEventListener("click", event => {
-//         if(event.target.className === "stateClass") {
-//             console.log(event)
-//         showStateSights(event)
-//         }
-        
-//     })
-// }
-
-// State
-// const showStateSights =(event)=> {
-//     const sightsDiv = document.querySelector("#sights")
-//     sightsDiv.innerHTML = ""
-//     let id = event.target.dataset.id
-//     fetch(`http://localhost:3000/states/${id}/sights`)
-//     .then(resp => resp.json())
-//     .then(sights => { console.log(sights);
-//         if (sights.length === 0) {
-//             console.log("empty")
-//             sightsDiv.innerHTML = "You haven't added any sights here or visited this state yet. Try adding some, choose a different state or check out the sights in all the states."
-//         } else {
-//             sightsDiv.innerHTML = "Here's what you've visited in this state:"
-//             sights.forEach(sight => {
-//                 getSight(sight)})
-//             // const{id, name, image, details, likes, state_id} = sight
-//             // new Sight(id, name, image, details, likes, state_id)
-//         }
-//         // addSightsToPage(sightsArray)
-//     })
-// }
 
 //Sight
 // const getSight =(sight)=> {
@@ -142,20 +59,20 @@ document.addEventListener("DOMContentLoaded", init)
 //     document.querySelector('#sights').appendChild(sightDiv)
 // }
 
-addArrowsListeners =()=> {
-    let back = document.querySelector('#previous'),
-    forward = document.querySelector('#next');
-    back.addEventListener('click', () => {pageDown()}),
-    forward.addEventListener('click', () => {pageUp()})
-}
+// addArrowsListeners =()=> {
+//     let back = document.querySelector('#previous'),
+//     forward = document.querySelector('#next');
+//     back.addEventListener('click', () => {pageDown()}),
+//     forward.addEventListener('click', () => {pageUp()})
+// }
 
-pageUp =()=> {
-    page < 5 ? (page++, getStates(page)) : alert('No more pages')
-}
+// pageUp =()=> {
+//     page < 5 ? (page++, getStates(page)) : alert('No more pages')
+// }
 
-pageDown =()=> {
-    1 < page ? (page--, getStates(page)) : alert('No more pages')
-}
+// pageDown =()=> {
+//     1 < page ? (page--, getStates(page)) : alert('No more pages')
+// }
 
 //Sight
 // const sightsColumn = document.querySelector("#sights")
@@ -225,7 +142,7 @@ pageDown =()=> {
 //     }
 // })
 
-//API, select not working
+
 createSightForm =()=> {
     const sightForm = document.createElement('form')
     sightName = document.createElement('input')
@@ -273,8 +190,10 @@ findPos =(obj)=>  {
     }
 }
 
+
 createSight =()=> {
-    
+    const allSights = document.querySelectorAll(".sightClass")
+
     const createForm = document.querySelector("#sightForm")
     createForm.addEventListener("submit", event => {
         event.preventDefault();
@@ -297,9 +216,12 @@ createSight =()=> {
             })
         })
         .then(resp => resp.json())
-        .then(newSight =>
-            Sight.getSight(newSight))
-            //await Sight.getSight(newSight))
+
+        .then(sight => {
+            const{id, name, image, details, likes, state_id} = sight
+            new Sight(id, name, image, details, likes, state_id)
+        })
+        //API.getSights()
         event.target.reset()
         console.log("I'm here")
         window.scroll(0,findPos(document.querySelector("#footer")))
@@ -307,7 +229,7 @@ createSight =()=> {
     })
 }
 
-//not working yet
+// not working yet
 // getSingleSight =(sight)=> {
 //     const chosenSight = document.querySelector(".sightName")
 //     chosenSight.dataset.id = sight.id
