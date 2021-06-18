@@ -251,7 +251,7 @@ statesArray.forEach((st, i) => {
     opt.value = i + 1
     opt.className = "stateOptions"
     sightState.appendChild(opt)
-    console.log(st)
+    //console.log(st)
 })
 
     sightButton.innerHTML = 'Create a sight'
@@ -263,7 +263,18 @@ statesArray.forEach((st, i) => {
     document.getElementById('new_form').appendChild(sightForm)
 }
 
+findPos =(obj)=>  {
+    let spot = 0;
+    if (obj.offsetParent) {
+        do {
+            spot += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    return spot;
+    }
+}
+
 createSight =()=> {
+    
     const createForm = document.querySelector("#sightForm")
     createForm.addEventListener("submit", event => {
         event.preventDefault();
@@ -291,6 +302,8 @@ createSight =()=> {
             //await Sight.getSight(newSight))
         event.target.reset()
         console.log("I'm here")
+        window.scroll(0,findPos(document.querySelector("#footer")))
+        console.log("end")
     })
 }
 

@@ -80,16 +80,16 @@ class API {
         
             if(event.target.matches(".delete-btn")) {
                 const id = event.target.dataset.id
-                const sightToDelete = document.getElementById(id)
-                console.log(sightToDelete)
+                //const sightToDelete = document.querySelector(".sightClass")
+                //console.log(sightToDelete)
                 fetch(`http://localhost:3000/sights/${id}`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" }
                 })
                 .then(resp => resp.json())
-                
-                .then( console.log(sightToDelete),
-                    sightToDelete.remove())
+                .then( console.log("sight deleted")//,
+                    //sightToDelete.remove()
+                    )
             }
         })
     }
