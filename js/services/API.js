@@ -88,38 +88,8 @@ class API {
                     headers: { "Content-Type": "application/json" }
                 })
                 .then(resp => resp.json())
-                .then(
-                    sightToDelete.remove()
-                    )
+                .then(sightToDelete.remove())
             }
         })
     }
-
-    // static createSightForm =()=> {
-    //     const sightForm = document.createElement('form')
-    //     sightName = document.createElement('input')
-    //     sightImage = document.createElement('input')
-    //     sightDetails = document.createElement('input')
-    //     sightState = document.createElement('select')
-    //     sightButton = document.createElement('button')
-    //     sightForm.id = 'sight_form'
-    //     sightName.id = 'sight_name'
-    //     sightImage.id = 'sight_image'
-    //     sightDetails.id = 'sight_details'
-    //     sightState.id = 'sight_state'
-    //     sightButton.id = 'sight_button'
-    //     sightName.placeholder = 'Name'
-    //     sightImage.placeholder = 'Image path'
-    //     sightDetails.placeholder = 'Impressions'
-    //     //sightState.meaning = State.all
-    //     sightButton.innerHTML = 'Create a sight'
-    //     sightForm.appendChild(sightName)
-    //     sightForm.appendChild(sightImage)
-    //     sightForm.appendChild(sightDetails)
-    //     sightForm.appendChild(sightState)
-    //     sightForm.appendChild(sightButton)
-    //     document.getElementById('new_form').appendChild(sightForm)
-    //     }
-
-
 }
