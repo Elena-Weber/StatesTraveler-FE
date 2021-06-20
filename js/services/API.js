@@ -53,7 +53,7 @@ class API {
                 })
                 .then(resp => resp.json())
                 .then(updatedLikes => {
-                    console.log(updatedLikes)
+                    //console.log(updatedLikes)
                     likesSection.textContent = `${updatedLikes.likes} like(s)`
                 })
             }

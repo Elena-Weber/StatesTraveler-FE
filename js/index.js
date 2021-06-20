@@ -13,7 +13,8 @@ init =()=> {
     createSightForm(),
     createSight(),
     API.navi(),
-    API.sightButtons()
+    API.sightButtons()//,
+    //latestStatistics()
 }
 
 document.addEventListener("DOMContentLoaded", init)
@@ -64,18 +65,16 @@ findPos =(obj)=>  {
 }
 
 createSight =()=> {
-    const allSights = document.querySelectorAll(".sightClass")
 
     const createForm = document.querySelector("#sightForm")
     createForm.addEventListener("submit", event => {
         event.preventDefault();
-    //console.log("submit button clicked")
         const name = event.target.sightName.value
         const image = event.target.sightImage.value
         const details = event.target.sightDetails.value
-        const state_id = event.target.sightState.value
+        const state = event.target.sightState.value
         const submit = event.target.submit
-    //console.log("submitting this:", submit)
+
         fetch("http://localhost:3000/sights", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -84,30 +83,51 @@ createSight =()=> {
                 "image": image,
                 "details": details,
                 "likes": 0,
-                "state_id": state_id
+                "state_id": state
             })
         })
         .then(resp => resp.json())
-
         .then(sight => {
-            const{id, name, image, details, likes, state_id} = sight
-            new Sight(id, name, image, details, likes, state_id)
+            const{id, name, image, details, likes} = sight
+            new Sight(id, name, image, details, likes, sight.state)
         })
         event.target.reset()
-        console.log("I'm here")
         window.scroll(0,findPos(document.querySelector("#footer")))
-        console.log("end")
     })
 }
 
-getStats =()=> {
-    const statsDiv = document.querySelector("#stats")
-        latest_sights.forEach((latest) => {
-            let si = document.createElement('p')
-            si.appendChild(document.createTextNode(latest))
-            statsDiv.appendChild(opt)
-        })
-}
+// latestStatistics =()=> {
+//     let arr = Sight.all
+//     let sightsArr = arr.slice(-10)
+//     const statsDiv = document.createElement('div')
+    
+//     sightsArr.forEach((si) => {
+//         const stat = document.createElement('p')
+//         stat.innerHTML = `
+//         <p>${si}</p>
+//         `
+//         statsDiv.appendChild(stat)
+//     },
+// document.querySelector('#stats').appendChild(statsDiv)
+//     )}
+
+// getStats =()=> {
+//     const statsDiv = document.createElement('div')
+//     const stat = document.createElement('p')
+//     stat.innerHTML = `
+//         <p>${Sight.latest_sights}</p>
+//         `
+// statsDiv.appendChild(stat)
+// document.querySelector('#stats').appendChild(statsDiv)
+
+//         // latest_sights.forEach((latest) => {
+//         //     let si = document.createElement('p')
+//         //     si.appendChild(document.createTextNode(latest))
+//         //     statsDiv.appendChild(opt)
+//         // })
+// }
+
+
 
 // addArrowsListeners =()=> {
 //     let back = document.querySelector('#previous'),

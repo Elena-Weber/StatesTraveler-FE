@@ -8,10 +8,10 @@ class Sight {
         this.likes = likes
         this.state = state_id
         this.getSight()
+        
     }
 
     sightCard =()=> {
-        //debugger
         return `
             <h2 data-id="${this.id}" class="sightName">${this.name}</h2>
             <img data-id="${this.id}" src=${this.image} class="sightPic" />
@@ -37,7 +37,6 @@ class Sight {
         sightDiv.addEventListener("click", event => {
 
             if(event.target.matches(".edit-btn")) {
-                //document.querySelector(".edit-btn").disabled = true
 
                 const sightToUpdate = event.target.closest(".sightClass")
                 const sightToEditForm = document.createElement("form")
@@ -73,10 +72,15 @@ class Sight {
                 `
                 sightDiv.append(sightToEditForm)
 
+sightDiv.querySelector(".edit-btn").disabled = true
+
                 const notEdit = sightToEditForm.querySelector(".close-button")
                 notEdit.addEventListener("click", () => {
                     sightToEditForm.remove()
+                    sightDiv.querySelector(".edit-btn").disabled = false
                 })
+
+                
 
                 sightToEditForm.addEventListener("click", (event) => {
                     event.preventDefault();
@@ -104,6 +108,7 @@ class Sight {
                             sightToUpdate.querySelector("p").innerText = editedSight.details
                         })
                         .then(sightToEditForm.remove())
+                        sightDiv.querySelector(".edit-btn").disabled = false
                     }
                 })
             }
