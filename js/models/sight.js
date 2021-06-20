@@ -6,16 +6,17 @@ class Sight {
         this.image = image
         this.details = details
         this.likes = likes
-        this.state_id = state_id
+        this.state = state_id
         this.getSight()
     }
 
     sightCard =()=> {
+        //debugger
         return `
             <h2 data-id="${this.id}" class="sightName">${this.name}</h2>
             <img data-id="${this.id}" src=${this.image} class="sightPic" />
             <p data-id="${this.id}" class="sightDetails">${this.details}</p>
-            <p data-id="${this.id}" class="sightState">State: ${this.state_id}</p>
+            <p data-id="${this.id}" class="sightState">State: ${this.state.name}</p>
             <p data-id="${this.id}" class="sightLikes">${this.likes} like(s)</p>
             <button data-id="${this.id}" class="like-btn">Like</button>
             <button data-id="${this.id}" class="dislike-btn">Dislike</button>
@@ -25,6 +26,7 @@ class Sight {
     }
 
     getSight =(sight)=> {
+
         const sightDiv = document.createElement('div')
         sightDiv.classList.add("sightClass")
         sightDiv.setAttribute("data-id", this.id)
@@ -35,6 +37,8 @@ class Sight {
         sightDiv.addEventListener("click", event => {
 
             if(event.target.matches(".edit-btn")) {
+                //document.querySelector(".edit-btn").disabled = true
+
                 const sightToUpdate = event.target.closest(".sightClass")
                 const sightToEditForm = document.createElement("form")
                 sightToEditForm.innerHTML = `

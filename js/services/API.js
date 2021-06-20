@@ -16,8 +16,8 @@ class API {
         .then(resp => resp.json())
         .then(sights => { //console.log(sights);
             sights.forEach(sight => {
-                const{id, name, image, details, likes, state_id} = sight
-                new Sight(id, name, image, details, likes, state_id)
+                const{id, name, image, details, likes} = sight
+                new Sight(id, name, image, details, likes, sight.state)
             })
         })
     }

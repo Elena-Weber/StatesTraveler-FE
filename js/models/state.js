@@ -39,8 +39,8 @@ class State {
             } else {
                 sightsDiv.innerHTML = "<h3>Here's what you've visited in this state:</h3>"
                 sights.forEach(sight => {
-                const{id, name, image, details, likes, state_id} = sight
-                new Sight(id, name, image, details, likes, state_id)
+                const{id, name, image, details, likes} = sight
+                new Sight(id, name, image, details, likes, sight.state)
                 })
             }
         })

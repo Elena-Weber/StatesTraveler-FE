@@ -108,7 +108,7 @@ cursor: pointer;
 #title:hover {
     cursor: pointer;
 }
-#new_form {
+#new_for {
     position: fixed;
     
 }
@@ -120,4 +120,8 @@ cursor: pointer;
 #create_new_sight {
     background: linear-gradient(90deg, rgba(167,196,188,1) 0%, rgba(167,196,188,0) 100%);
 
+}
+
+select {
+    margin: 10px;
 }

@@ -16,8 +16,6 @@ init =()=> {
     API.sightButtons()
 }
 
-//let preventMultipleEdit = true;
-
 document.addEventListener("DOMContentLoaded", init)
 
 createSightForm =()=> {
@@ -102,6 +100,14 @@ createSight =()=> {
     })
 }
 
+getStats =()=> {
+    const statsDiv = document.querySelector("#stats")
+        latest_sights.forEach((latest) => {
+            let si = document.createElement('p')
+            si.appendChild(document.createTextNode(latest))
+            statsDiv.appendChild(opt)
+        })
+}
 
 // addArrowsListeners =()=> {
 //     let back = document.querySelector('#previous'),
