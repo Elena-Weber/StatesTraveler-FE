@@ -17,6 +17,7 @@ color: #5E8B7E;
 #container {
     display: flex;
     padding: 10px;
+    position: relative;
 }
 
 #menu {
@@ -57,10 +58,12 @@ padding: 5px;
 
 button {
     border-radius: 5px;
+    padding: 5px 10px;
 }
 
 button:hover {
     background-color: #A7C4BC;
+    cursor: pointer;
 }
 
 input {
@@ -99,7 +102,7 @@ background: linear-gradient(90deg, rgba(167,196,188,1) 0%, rgba(167,196,188,0) 1
 cursor: pointer;
 }
 
-#title, .sightName {
+#title, .sightName, #create_new_sight, #search_title {
     padding: 10px;
     background: linear-gradient(90deg, rgba(167,196,188,1) 0%, rgba(167,196,188,0) 100%);
 
@@ -110,18 +113,26 @@ cursor: pointer;
 }
 #new_for {
     position: fixed;
-    
+    top: 90px;
+    right: 10px;
+    width: 350px;
+}
+
+#search_di {
+    position: fixed;
+    top: 370px;
+    right: 10px;
+    width: 350px;
 }
 
 #sightName, #sightImage, #sightDetails {
     margin: 10px 0;
 }
 
-#create_new_sight {
-    background: linear-gradient(90deg, rgba(167,196,188,1) 0%, rgba(167,196,188,0) 100%);
-
-}
-
 select {
     margin: 10px;
+}
+
+.small-pic {
+    width: 100px;
 }

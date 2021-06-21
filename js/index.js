@@ -4,16 +4,14 @@ document.addEventListener("click", (event) =>{
 
 const baseURL = "http://localhost:3000/"
 
-//let page = 1
-
 init =()=> {
     API.getStates(),
     API.getSights(),
-    //addArrowsListeners(),
     createSightForm(),
     createSight(),
     API.navi(),
-    API.sightButtons()//,
+    API.sightButtons(),
+    searchFunction()
     //latestStatistics()
 }
 
@@ -87,14 +85,63 @@ createSight =()=> {
             })
         })
         .then(resp => resp.json())
-        .then(sight => {
+        .then(sight => { console.log(sight)
             const{id, name, image, details, likes} = sight
             new Sight(id, name, image, details, likes, sight.state)
         })
+        //console.log(then)
         event.target.reset()
         window.scroll(0,findPos(document.querySelector("#footer")))
     })
 }
+
+searchFunction =()=> {
+    const sightsList = document.querySelector("#sightsList")
+    const searchBar = document.querySelector("#searchBar")
+    let sightsArray = []
+
+    searchBar.addEventListener('keyup', (event) => {
+        console.log(event.target.value)
+        const searchString = event.target.value.toLowerCase()
+        let filteredSights = sightsArray.filter((si) => {
+            return (si.name.toLowerCase().startsWith(searchString))
+        })
+
+        if (searchString != "") {
+        displaySights(filteredSights)
+        } else {
+            sightsList.innerHTML = ""
+        }
+    })
+
+    const loadSights = async () => {
+            const res = await fetch('http://localhost:3000/sights')
+            sightsArray = await res.json()
+        }
+
+    const displaySights = (sights) => {
+        const htmlString = sights.map((sight) => {
+            let id = sight.id
+            return `
+                <li class="searched-sight">
+                <img class="small-pic" src="${sight.image}"></img>
+                <p>Sight: ${sight.name}, State: ${sight.state_id}</p>
+                <p>Impressions: ${sight.details}</p>
+                </li>
+            `;
+        }).join('');
+    sightsList.innerHTML = htmlString;
+    }
+
+    loadSights()
+}
+
+
+
+
+
+
+
 
 // latestStatistics =()=> {
 //     let arr = Sight.all
@@ -125,21 +172,4 @@ createSight =()=> {
 //         //     si.appendChild(document.createTextNode(latest))
 //         //     statsDiv.appendChild(opt)
 //         // })
-// }
-
-
-
-// addArrowsListeners =()=> {
-//     let back = document.querySelector('#previous'),
-//     forward = document.querySelector('#next');
-//     back.addEventListener('click', () => {pageDown()}),
-//     forward.addEventListener('click', () => {pageUp()})
-// }
-
-// pageUp =()=> {
-//     page < 5 ? (page++, getStates(page)) : alert('No more pages')
-// }
-
-// pageDown =()=> {
-//     1 < page ? (page--, getStates(page)) : alert('No more pages')
 // }
