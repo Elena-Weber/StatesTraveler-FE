@@ -62,8 +62,8 @@ findPos =(obj)=>  {
     }
 }
 
-createSight =()=> {
 
+createSight =()=> {
     const createForm = document.querySelector("#sightForm")
     createForm.addEventListener("submit", event => {
         event.preventDefault();
@@ -119,17 +119,18 @@ searchFunction =()=> {
             sightsArray = await res.json()
         }
 
-    const displaySights = (sights) => {
+    const displaySights = (sights) => { console.log(sights)
         const htmlString = sights.map((sight) => {
-            let id = sight.id
+            //let id = sight.id
             return `
                 <li class="searched-sight">
                 <img class="small-pic" src="${sight.image}"></img>
-                <p>Sight: ${sight.name}, State: ${sight.state_id}</p>
-                <p>Impressions: ${sight.details}</p>
+                <p>${sight.name} in ${sight.state.name}</p>
+                <p>What you think about it: ${sight.details}</p>
                 </li>
             `;
         }).join('');
+        
     sightsList.innerHTML = htmlString;
     }
 
