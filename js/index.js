@@ -2,18 +2,16 @@ document.addEventListener("click", (event) =>{
     console.log("You've Just Clicked on ", event.target)
 })
 
-const baseURL = "http://localhost:3000/"
-
 init =()=> {
     API.getStates(),
     API.getSights(),
-    createSightForm(),
-    createSight(),
     API.navi(),
     API.sightButtons(),
-    searchFunction(),
     API.mostVisitedState(),
-    API.mostLikedSight()
+    API.mostLikedSight(),
+    createSightForm(),
+    createSight(),
+    searchFunction()
 }
 
 document.addEventListener("DOMContentLoaded", init)
@@ -85,11 +83,10 @@ createSight =()=> {
             })
         })
         .then(resp => resp.json())
-        .then(sight => { console.log(sight)
+        .then(sight => { //console.log(sight)
             const{id, name, image, details, likes} = sight
             new Sight(id, name, image, details, likes, sight.state)
         })
-        //console.log(then)
         event.target.reset()
         window.scroll(0,findPos(document.querySelector("#footer")))
     })

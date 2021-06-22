@@ -26,7 +26,6 @@ class API {
         const sightsDiv = document.querySelector("#sights")
         const title = document.querySelector("#title")
         title.addEventListener("click", event => { event.preventDefault()
-            //console.log("title clicked")
             sightsDiv.innerHTML = ""
         this.getSights()
         })
@@ -71,7 +70,6 @@ class API {
                 })
                 .then(resp => resp.json())
                 .then(updatedLikes => {
-                    //console.log(updatedLikes)
                     likesSection.textContent = `${updatedLikes.likes} like(s)`
                 })
             }
@@ -100,7 +98,6 @@ class API {
                 const id = event.target.dataset.id
                 //debugger
                 const sightToDelete = event.target.parentElement
-                //console.log(sightToDelete)
                 fetch(`http://localhost:3000/sights/${id}`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" }
@@ -111,5 +108,4 @@ class API {
         })
     }
 
-    
 }
