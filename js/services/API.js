@@ -32,6 +32,24 @@ class API {
         })
     }
 
+    static mostVisitedState =()=> {
+        const mostVisited = document.querySelector("#mostP")
+        fetch(`http://localhost:3000/mostvis`)
+        .then(resp => resp.json())
+        .then(state => { //console.log(state)
+            mostVisited.innerHTML = state.name
+        })
+    }
+
+    static mostLikedSight =()=> {
+        const mostLiked = document.querySelector("#likedP")
+        fetch(`http://localhost:3000/mostliked`)
+        .then(resp => resp.json())
+        .then(sight => { //console.log(sight)
+            mostLiked.innerHTML = sight.name
+        })
+    }
+
     static sightButtons =()=> {
         const sightsColumn = document.querySelector("#sights")
         sightsColumn.addEventListener("click", event => {
@@ -92,4 +110,6 @@ class API {
             }
         })
     }
+
+    
 }

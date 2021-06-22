@@ -11,8 +11,9 @@ init =()=> {
     createSight(),
     API.navi(),
     API.sightButtons(),
-    searchFunction()
-    //latestStatistics()
+    searchFunction(),
+    API.mostVisitedState(),
+    API.mostLikedSight()
 }
 
 document.addEventListener("DOMContentLoaded", init)
@@ -61,7 +62,6 @@ findPos =(obj)=>  {
     return spot;
     }
 }
-
 
 createSight =()=> {
     const createForm = document.querySelector("#sightForm")
@@ -121,7 +121,6 @@ searchFunction =()=> {
 
     const displaySights = (sights) => { console.log(sights)
         const htmlString = sights.map((sight) => {
-            //let id = sight.id
             return `
                 <li class="searched-sight">
                 <img class="small-pic" src="${sight.image}"></img>
@@ -131,46 +130,8 @@ searchFunction =()=> {
             `;
         }).join('');
         
-    sightsList.innerHTML = htmlString;
+    sightsList.innerHTML = htmlString;                              
     }
 
     loadSights()
 }
-
-
-
-
-
-
-
-
-// latestStatistics =()=> {
-//     let arr = Sight.all
-//     let sightsArr = arr.slice(-10)
-//     const statsDiv = document.createElement('div')
-    
-//     sightsArr.forEach((si) => {
-//         const stat = document.createElement('p')
-//         stat.innerHTML = `
-//         <p>${si}</p>
-//         `
-//         statsDiv.appendChild(stat)
-//     },
-// document.querySelector('#stats').appendChild(statsDiv)
-//     )}
-
-// getStats =()=> {
-//     const statsDiv = document.createElement('div')
-//     const stat = document.createElement('p')
-//     stat.innerHTML = `
-//         <p>${Sight.latest_sights}</p>
-//         `
-// statsDiv.appendChild(stat)
-// document.querySelector('#stats').appendChild(statsDiv)
-
-//         // latest_sights.forEach((latest) => {
-//         //     let si = document.createElement('p')
-//         //     si.appendChild(document.createTextNode(latest))
-//         //     statsDiv.appendChild(opt)
-//         // })
-// }

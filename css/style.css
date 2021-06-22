@@ -11,7 +11,7 @@ img {
 }
 
 #navi:hover {
-color: #5E8B7E;
+    color: #5E8B7E;
 }
 
 #container {
@@ -20,10 +20,15 @@ color: #5E8B7E;
     position: relative;
 }
 
+#first {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
 #menu {
-flex: 2;
-padding: 10px;
-margin: 5px;
+    padding: 10px;
+    margin: 5px;
 }
 
 #buttons {
@@ -52,8 +57,8 @@ a {
 }
 
 a:hover {
-background-color: #A7C4BC;
-padding: 5px;
+    background-color: #A7C4BC;
+    padding: 5px;
 }
 
 button {
@@ -67,42 +72,41 @@ button:hover {
 }
 
 input {
-width: 80%;
-padding: 5px;
-border-radius: 3px;
+    width: 80%;
+    padding: 5px;
+    border-radius: 3px;
 }
 
 #sights {
-flex: 7;
-padding: 10px;
-margin: 5px;
-text-align: center;
+    flex: 7;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
 }
 
 .stateClass:hover {
-color: #5E8B7E;
+    color: #5E8B7E;
 }
 
 #third_column {
-flex: 3;
-padding: 10px;
-margin: 5px;
-text-align: center;
-display: flex;
-flex-direction: column;
+    flex: 3;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 #footer {
-padding: 20px;
-background: linear-gradient(90deg, rgba(167,196,188,1) 0%, rgba(167,196,188,0) 100%);
-
+    padding: 20px;
+    background: linear-gradient(90deg, rgba(167,196,188,1) 0%, rgba(167,196,188,0) 100%);
 }
 
 .stateClass:hover {
-cursor: pointer;
+    cursor: pointer;
 }
 
-#title, .sightName, #create_new_sight, #search_title {
+#title, .sightName, #create_new_sight, #search_title, #mostvis, #liked_sight {
     padding: 10px;
     background: linear-gradient(90deg, rgba(167,196,188,1) 0%, rgba(167,196,188,0) 100%);
 
@@ -111,6 +115,7 @@ cursor: pointer;
 #title:hover {
     cursor: pointer;
 }
+
 #new_for {
     position: fixed;
     top: 90px;

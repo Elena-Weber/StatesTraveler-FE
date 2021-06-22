@@ -72,15 +72,13 @@ class Sight {
                 `
                 sightDiv.append(sightToEditForm)
 
-sightDiv.querySelector(".edit-btn").disabled = true
+                sightDiv.querySelector(".edit-btn").disabled = true
 
                 const notEdit = sightToEditForm.querySelector(".close-button")
                 notEdit.addEventListener("click", () => {
                     sightToEditForm.remove()
                     sightDiv.querySelector(".edit-btn").disabled = false
                 })
-
-                
 
                 sightToEditForm.addEventListener("click", (event) => {
                     event.preventDefault();
