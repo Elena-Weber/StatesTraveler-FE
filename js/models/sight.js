@@ -8,7 +8,6 @@ class Sight {
         this.likes = likes
         this.state = state_id
         this.getSight()
-        
     }
 
     sightCard =()=> {

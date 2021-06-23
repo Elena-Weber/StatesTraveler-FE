@@ -71,6 +71,11 @@ createSight =()=> {
         const state = event.target.sightState.value
         const submit = event.target.submit
 
+        if (name == "" || image == "" || details == "") {
+            alert("Please fill out all the fields of the form.");
+            return false;
+        }
+
         fetch("http://localhost:3000/sights", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -98,7 +103,7 @@ searchFunction =()=> {
     let sightsArray = []
 
     searchBar.addEventListener('keyup', (event) => {
-        console.log(event.target.value)
+        //console.log(event.target.value)
         const searchString = event.target.value.toLowerCase()
         let filteredSights = sightsArray.filter((si) => {
             return (si.name.toLowerCase().startsWith(searchString))
@@ -116,7 +121,7 @@ searchFunction =()=> {
             sightsArray = await res.json()
         }
 
-    const displaySights = (sights) => { console.log(sights)
+    const displaySights = (sights) => { //console.log(sights)
         const htmlString = sights.map((sight) => {
             return `
                 <li class="searched-sight">
