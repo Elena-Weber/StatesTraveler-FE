@@ -15,7 +15,7 @@ class API {
         fetch("http://localhost:3000/sights")
         .then(resp => resp.json())
         .then(sights => { //console.log(sights);
-            sights.forEach(sight => {
+            sights.sort((a, b) => (a.name > b.name ? 1 : -1)).forEach(sight => {
                 const{id, name, image, details, likes} = sight
                 new Sight(id, name, image, details, likes, sight.state)
             })
@@ -56,7 +56,7 @@ class API {
 
             if(event.target.matches(".like-btn")){
                 const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
-                console.log(likesSection)
+                //console.log(likesSection)
                 const likesCount = parseInt(likesSection.textContent)
                 const newLikes = likesCount + 1
                 const id = event.target.dataset.id
@@ -89,7 +89,7 @@ class API {
                 })
                 .then(resp => resp.json())
                 .then(updatedLikes => {
-                    console.log(updatedLikes)
+                    //console.log(updatedLikes)
                     likesSection.textContent = `${updatedLikes.likes} like(s)`
                 })
             }
