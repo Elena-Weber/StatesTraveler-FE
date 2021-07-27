@@ -15,12 +15,26 @@ class API {
         fetch("http://localhost:3000/sights")
         .then(resp => resp.json())
         .then(sights => { //console.log(sights);
-            sights.sort((a, b) => (a.name > b.name ? 1 : -1)).forEach(sight => {
+            sights.forEach(sight => {
                 const{id, name, image, details, likes} = sight
                 new Sight(id, name, image, details, likes, sight.state)
             })
         })
     }
+
+    // UNCOMMENT THIS TO SEE SIGHTS IN THE ALPHABETICAL ORDER
+    // AND COMMENT OUT THE PREVIOUS DEFAULT FUNCTION (BY CREATION DATE)
+
+    // static getSights() {
+    //     fetch("http://localhost:3000/sights")
+    //     .then(resp => resp.json())
+    //     .then(sights => { //console.log(sights);
+    //         sights.sort((a, b) => (a.name > b.name ? 1 : -1)).forEach(sight => {
+    //             const{id, name, image, details, likes} = sight
+    //             new Sight(id, name, image, details, likes, sight.state)
+    //         })
+    //     })
+    // }
 
     static navi =()=> {
         const sightsDiv = document.querySelector("#sights")
