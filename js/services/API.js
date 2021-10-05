@@ -1,6 +1,6 @@
 class API {
 
-    static getStates() {
+    static getStates() { // display all states from database
         fetch("http://localhost:3000/states")
         .then(resp => resp.json())
         .then(states => { //console.log(states)
@@ -11,10 +11,10 @@ class API {
         })
     }
 
-    static getSights() {
+    static getSights() { // display all sights from database
         fetch("http://localhost:3000/sights")
         .then(resp => resp.json())
-        .then(sights => { //console.log(sights);
+        .then(sights => {
             sights.forEach(sight => {
                 const{id, name, image, details, likes} = sight
                 new Sight(id, name, image, details, likes, sight.state)
@@ -36,7 +36,7 @@ class API {
     //     })
     // }
 
-    static navi =()=> {
+    static navi =()=> { // display all sights on a click
         const sightsDiv = document.querySelector("#sights")
         const title = document.querySelector("#title")
         title.addEventListener("click", event => { event.preventDefault()
@@ -45,32 +45,31 @@ class API {
         })
     }
 
-    static mostVisitedState =()=> {
+    static mostVisitedState =()=> { //calculate state with most sights
         const mostVisited = document.querySelector("#mostP")
         fetch(`http://localhost:3000/mostvis`)
         .then(resp => resp.json())
-        .then(state => { //console.log(state)
+        .then(state => {
             mostVisited.innerHTML = state.name
         })
     }
 
-    static mostLikedSight =()=> {
+    static mostLikedSight =()=> { // display sight with most likes
         const mostLiked = document.querySelector("#likedP")
         fetch(`http://localhost:3000/mostliked`)
         .then(resp => resp.json())
-        .then(sight => { //console.log(sight)
+        .then(sight => {
             mostLiked.innerHTML = sight.name
         })
     }
 
-    static sightButtons =()=> {
+    static sightButtons =()=> { // liking and disliking features
         const sightsColumn = document.querySelector("#sights")
         sightsColumn.addEventListener("click", event => {
             event.preventDefault();
 
             if(event.target.matches(".like-btn")){
                 const likesSection = event.target.closest(".sightClass").querySelector(".sightLikes")
-                //console.log(likesSection)
                 const likesCount = parseInt(likesSection.textContent)
                 const newLikes = likesCount + 1
                 const id = event.target.dataset.id
@@ -103,14 +102,12 @@ class API {
                 })
                 .then(resp => resp.json())
                 .then(updatedLikes => {
-                    //console.log(updatedLikes)
                     likesSection.textContent = `${updatedLikes.likes} like(s)`
                 })
             }
         
-            if(event.target.matches(".delete-btn")) {
+            if(event.target.matches(".delete-btn")) { // delete btn
                 const id = event.target.dataset.id
-                //debugger
                 const sightToDelete = event.target.parentElement
                 fetch(`http://localhost:3000/sights/${id}`, {
                     method: "DELETE",

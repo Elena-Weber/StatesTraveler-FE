@@ -1,8 +1,8 @@
-document.addEventListener("click", (event) =>{
-    console.log("You've Just Clicked on ", event.target)
-})
+// document.addEventListener("click", (event) =>{
+//     console.log("You've Just Clicked on ", event.target)
+// })
 
-init =()=> {
+init =()=> { // what to call on page load
     API.getStates(),
     API.getSights(),
     API.navi(),
@@ -16,7 +16,7 @@ init =()=> {
 
 document.addEventListener("DOMContentLoaded", init)
 
-createSightForm =()=> {
+createSightForm =()=> { // form to create a new sight
     const sightForm = document.createElement('form')
     sightName = document.createElement('input')
     sightImage = document.createElement('input')
@@ -33,6 +33,7 @@ createSightForm =()=> {
     sightImage.placeholder = 'Image path'
     sightDetails.placeholder = 'Impressions'
 
+    // dropdown menu with all 50 states
     const statesArray = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
     statesArray.forEach((st, i) => {
         let opt = document.createElement('option')
@@ -48,10 +49,10 @@ createSightForm =()=> {
     sightForm.appendChild(sightDetails)
     sightForm.appendChild(sightState)
     sightForm.appendChild(sightButton)
-    document.getElementById('new_form').appendChild(sightForm)
+    document.getElementById('new_form').appendChild(sightForm) // display new sight form
 }
 
-findPos =(obj)=>  {
+findPos =(obj)=>  { // browser jumping to the end of the page where the newly created sight is
     let spot = 0;
     if (obj.offsetParent) {
         do {
@@ -61,7 +62,7 @@ findPos =(obj)=>  {
     }
 }
 
-createSight =()=> {
+createSight =()=> { // gathering info from the form and sending the new sight to the database
     const createForm = document.querySelector("#sightForm")
     createForm.addEventListener("submit", event => {
         event.preventDefault();
@@ -88,22 +89,21 @@ createSight =()=> {
             })
         })
         .then(resp => resp.json())
-        .then(sight => { //console.log(sight)
+        .then(sight => {
             const{id, name, image, details, likes} = sight
             new Sight(id, name, image, details, likes, sight.state)
         })
         event.target.reset()
-        window.scroll(0,findPos(document.querySelector("#footer")))
+        window.scroll(0,findPos(document.querySelector("#footer"))) // browser auto scrolling
     })
 }
 
-searchFunction =()=> {
+searchFunction =()=> { // searching for a sight
     const sightsList = document.querySelector("#sightsList")
     const searchBar = document.querySelector("#searchBar")
     let sightsArray = []
 
     searchBar.addEventListener('keyup', (event) => {
-        //console.log(event.target.value)
         const searchString = event.target.value.toLowerCase()
         let filteredSights = sightsArray.filter((si) => {
             return (si.name.toLowerCase().startsWith(searchString))
@@ -116,12 +116,12 @@ searchFunction =()=> {
         }
     })
 
-    const loadSights = async () => {
+    const loadSights = async () => { // fetch all sights
             const res = await fetch('http://localhost:3000/sights')
             sightsArray = await res.json()
         }
 
-    const displaySights = (sights) => { //console.log(sights)
+    const displaySights = (sights) => { // display sought for sights
         const htmlString = sights.map((sight) => {
             return `
                 <li class="searched-sight">

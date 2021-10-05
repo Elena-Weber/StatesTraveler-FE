@@ -1,12 +1,12 @@
 class State {
     
-    constructor(id, name) {
+    constructor(id, name) { /// what data each state has
         this.id = id
         this.name = name
         this.getState()
     }
     
-    getState =()=> {
+    getState =()=> { // displaying states menu
         const stateDiv = document.createElement('div')
         const stateName = document.createElement('h3')
         stateName.id = this.id
@@ -24,13 +24,13 @@ class State {
         })
     }
 
-    showStateSights(event) {
+    showStateSights(event) { // displaying sights in a chosen state
         const sightsDiv = document.querySelector("#sights")
         sightsDiv.innerHTML = ""
         let id = event.target.dataset.id
         fetch(`http://localhost:3000/states/${id}/sights`)
         .then(resp => resp.json())
-        .then(sights => { //console.log(sights);
+        .then(sights => {
             if (sights.length === 0) {
                 sightsDiv.innerHTML = "<h3>You haven't added any sights here or visited this state yet. Try adding some, choose a different state or check out the sights in all the states. There are so many beautiful places in the USA! 🇺🇸</h3><br><br><br><img class=\"pic\" src=\"https://images.unsplash.com/photo-1510797215324-95aa89f43c33?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80\" alt=\"picture\">"
             } else {

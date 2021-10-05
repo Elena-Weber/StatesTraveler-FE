@@ -1,6 +1,6 @@
 class Sight {
 
-    constructor(id, name, image, details, likes, state_id) {
+    constructor(id, name, image, details, likes, state_id) { // what data each sight instance has
         this.id = id
         this.name = name
         this.image = image
@@ -10,7 +10,7 @@ class Sight {
         this.getSight()
     }
 
-    sightCard =()=> {
+    sightCard =()=> { // this is how sight card looks like
         return `
             <h2 data-id="${this.id}" class="sightName">${this.name}</h2>
             <img data-id="${this.id}" src=${this.image} class="sightPic" />
@@ -35,7 +35,7 @@ class Sight {
 
         sightDiv.addEventListener("click", event => {
 
-            if(event.target.matches(".edit-btn")) {
+            if(event.target.matches(".edit-btn")) { // clicking edit btn
 
                 const sightToUpdate = event.target.closest(".sightClass")
                 const sightToEditForm = document.createElement("form")
@@ -69,17 +69,17 @@ class Sight {
                 </form>
                 <br><br><br>
                 `
-                sightDiv.append(sightToEditForm)
+                sightDiv.append(sightToEditForm) // display form to edit
 
-                sightDiv.querySelector(".edit-btn").disabled = true
+                sightDiv.querySelector(".edit-btn").disabled = true // disabling edit btn after click
 
-                const notEdit = sightToEditForm.querySelector(".close-button")
+                const notEdit = sightToEditForm.querySelector(".close-button") // hiding edit btn
                 notEdit.addEventListener("click", () => {
                     sightToEditForm.remove()
                     sightDiv.querySelector(".edit-btn").disabled = false
                 })
 
-                sightToEditForm.addEventListener("click", (event) => {
+                sightToEditForm.addEventListener("click", (event) => { // what to do at btn submitting
                     event.preventDefault();
                     if(event.target.matches(".submit-button")) {
                         let editedName = sightToEditForm.querySelector(".name-edit").value
